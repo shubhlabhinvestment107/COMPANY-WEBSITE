@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shubh Labh Investment | Where Every Rupee Finds Its Right Path</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --gold:#d4a843;--gold2:#f5c842;--gold3:#8a6820;
+  --dark:#08080a;--dark2:#101014;--dark3:#18181f;--dark4:#202028;
+  --text:#f8f3ea;--muted:#888899;--border:rgba(212,168,67,0.15);
+  --glow:rgba(212,168,67,0.25);
+}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+::selection{background:var(--gold);color:#000;}
+body{font-family:'Josefin Sans',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;}
+
+/* ══ CURSOR GLOW ══ */
+.cursor-glow{
+  position:fixed;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,168,67,0.06) 0%,transparent 70%);
+  pointer-events:none;z-index:0;transform:translate(-50%,-50%);
+  transition:left 0.15s ease,top 0.15s ease;
+}
+
+/* ══ NAVBAR ══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 6%;
+  transition:background 0.4s,padding 0.4s,box-shadow 0.4s;
+}
+nav.scrolled{
+  background:rgba(8,8,10,0.95);padding:1rem 6%;
+  box-shadow:0 1px 0 var(--border);backdrop-filter:blur(20px);
+}
+.logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;
+  color:var(--gold);letter-spacing:0.04em;line-height:1;
+  text-decoration:none;
+}
+.logo em{display:block;font-family:'Josefin Sans',sans-serif;font-style:normal;
+  font-size:0.45rem;font-weight:300;letter-spacing:0.35em;color:var(--muted);
+  text-transform:uppercase;margin-top:4px;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  color:var(--muted);font-size:0.75rem;font-weight:600;
+  letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;
+  transition:color 0.2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+  background:var(--gold);transition:width 0.3s;
+}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{
+  border:1px solid var(--gold);color:var(--gold);
+  padding:0.6rem 1.5rem;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;
+  transition:background 0.2s,color 0.2s,box-shadow 0.2s;
+}
+.nav-cta:hover{background:var(--gold);color:#000;box-shadow:0 0 30px var(--glow);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:300;}
+.hamburger span{width:22px;height:1px;background:var(--gold);transition:0.3s;}
+
+/* ══ HERO ══ */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:9rem 6% 5rem;position:relative;overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0;z-index:0;}
+.hero-bg::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 70% at 100% 50%,rgba(212,168,67,0.07) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 50% at 0% 100%,rgba(212,168,67,0.04) 0%,transparent 60%);
+}
+/* Animated lines */
+.hero-lines{
+  position:absolute;inset:0;overflow:hidden;opacity:0.04;
+}
+.hero-lines::before,.hero-lines::after{
+  content:'';position:absolute;
+  border:1px solid var(--gold);border-radius:50%;
+  animation:expandRing 8s linear infinite;
+}
+.hero-lines::before{
+  width:600px;height:600px;top:50%;left:60%;
+  transform:translate(-50%,-50%);animation-delay:0s;
+}
+.hero-lines::after{
+  width:900px;height:900px;top:50%;left:60%;
+  transform:translate(-50%,-50%);animation-delay:4s;
+}
+@keyframes expandRing{
+  0%{opacity:0.5;transform:translate(-50%,-50%) scale(0.6);}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.4);}
+}
+
+/* Diagonal golden stripe */
+.hero-stripe{
+  position:absolute;top:0;right:0;
+  width:45%;height:100%;z-index:0;
+  background:linear-gradient(135deg,transparent 40%,rgba(212,168,67,0.03) 100%);
+  border-left:1px solid rgba(212,168,67,0.08);
+  clip-path:polygon(10% 0,100% 0,100% 100%,0% 100%);
+}
+
+.hero-content{position:relative;z-index:1;max-width:720px;}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:1rem;margin-bottom:2rem;
+  animation:fadeUp 0.8s ease both;
+}
+.hero-line{width:40px;height:1px;background:var(--gold);}
+.hero-eyebrow-text{
+  font-size:0.7rem;font-weight:700;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--gold);
+}
+
+h1.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.5rem,7vw,6.5rem);
+  font-weight:700;line-height:0.95;
+  letter-spacing:-0.01em;
+  margin-bottom:2rem;
+  animation:fadeUp 0.8s ease 0.1s both;
+}
+h1.hero-title .outline{
+  -webkit-text-stroke:1px var(--gold);
+  color:transparent;
+}
+h1.hero-title .solid{color:var(--text);}
+h1.hero-title .gold-fill{color:var(--gold);}
+
+.hero-tagline{
+  font-size:0.95rem;font-weight:300;letter-spacing:0.05em;
+  color:var(--muted);line-height:1.9;
+  max-width:500px;margin-bottom:3rem;
+  animation:fadeUp 0.8s ease 0.2s both;
+}
+.hero-tagline strong{color:var(--text);font-weight:600;}
+
+.hero-btns{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  animation:fadeUp 0.8s ease 0.3s both;
+}
+.btn-filled{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;padding:1rem 2.5rem;
+  font-family:'Josefin Sans',sans-serif;
+  font-weight:700;font-size:0.75rem;letter-spacing:0.15em;
+  text-transform:uppercase;text-decoration:none;
+  transition:transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 4px 25px rgba(212,168,67,0.35);
+}
+.btn-filled:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(212,168,67,0.5);}
+.btn-ghost{
+  border:1px solid rgba(212,168,67,0.4);color:var(--gold);
+  padding:1rem 2.5rem;
+  font-family:'Josefin Sans',sans-serif;
+  font-weight:600;font-size:0.75rem;letter-spacing:0.15em;
+  text-transform:uppercase;text-decoration:none;
+  transition:border-color 0.2s,background 0.2s,transform 0.2s;
+}
+.btn-ghost:hover{border-color:var(--gold);background:rgba(212,168,67,0.06);transform:translateY(-3px);}
+
+.hero-stats{
+  display:flex;gap:0;margin-top:4rem;
+  border-top:1px solid var(--border);padding-top:2.5rem;
+  animation:fadeUp 0.8s ease 0.4s both;
+}
+.stat{padding:0 2.5rem 0 0;margin-right:2.5rem;border-right:1px solid var(--border);}
+.stat:last-child{border-right:none;}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.8rem;font-weight:700;color:var(--gold);
+  line-height:1;letter-spacing:-0.02em;
+}
+.stat-label{font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem;}
+
+/* ══ SECTION BASE ══ */
+section{padding:7rem 6%;}
+.sec-eyebrow{
+  display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;
+}
+.sec-line{width:30px;height:1px;background:var(--gold);}
+.sec-label{font-size:0.68rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.5rem);font-weight:700;
+  line-height:1.05;letter-spacing:-0.01em;
+}
+.sec-title span{color:var(--gold);}
+.sec-sub{
+  font-size:0.88rem;font-weight:300;letter-spacing:0.04em;
+  color:var(--muted);line-height:1.9;max-width:520px;margin-top:1rem;
+}
+
+/* ══ MARQUEE ══ */
+.marquee-wrap{
+  background:var(--gold);padding:0.85rem 0;overflow:hidden;
+  border-top:1px solid rgba(0,0,0,0.1);border-bottom:1px solid rgba(0,0,0,0.1);
+}
+.marquee-track{
+  display:flex;gap:3rem;white-space:nowrap;
+  animation:marquee 20s linear infinite;
+}
+.marquee-item{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.2em;
+  text-transform:uppercase;color:#000;
+  display:flex;align-items:center;gap:1rem;flex-shrink:0;
+}
+.marquee-item::after{content:'◆';font-size:0.5rem;}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══ ABOUT ══ */
+#about{background:var(--dark2);}
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:6rem;align-items:center;}
+.about-card{
+  position:relative;background:var(--dark3);
+  border:1px solid var(--border);padding:3rem;
+  overflow:hidden;
+}
+.about-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.about-card::after{
+  content:'₹';position:absolute;right:-0.5rem;bottom:-2rem;
+  font-family:'Cormorant Garamond',serif;font-size:12rem;font-weight:700;
+  color:rgba(212,168,67,0.04);line-height:1;pointer-events:none;
+}
+.about-points{list-style:none;display:flex;flex-direction:column;gap:1.25rem;position:relative;z-index:1;}
+.about-points li{
+  display:flex;align-items:flex-start;gap:1rem;
+  font-size:0.85rem;font-weight:300;letter-spacing:0.03em;
+  color:var(--muted);line-height:1.7;
+}
+.about-points li .num{
+  font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;
+  color:var(--gold);line-height:1;flex-shrink:0;width:1.5rem;
+}
+
+/* ══ SERVICES ══ */
+#services{background:var(--dark);}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:4rem;background:var(--border);}
+.service-card{
+  background:var(--dark2);padding:2.5rem;position:relative;overflow:hidden;
+  transition:background 0.3s;cursor:default;
+}
+.service-card::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0);transition:transform 0.4s;
+}
+.service-card:hover{background:var(--dark3);}
+.service-card:hover::before{transform:scaleX(1);}
+.service-num{
+  font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;
+  color:rgba(212,168,67,0.08);line-height:1;margin-bottom:1.5rem;
+  transition:color 0.3s;
+}
+.service-card:hover .service-num{color:rgba(212,168,67,0.15);}
+.service-icon-wrap{
+  width:48px;height:48px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:1.5rem;
+  transition:border-color 0.3s,background 0.3s;
+}
+.service-card:hover .service-icon-wrap{border-color:var(--gold);background:rgba(212,168,67,0.06);}
+.service-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;
+  margin-bottom:1rem;letter-spacing:0.01em;
+}
+.service-desc{font-size:0.82rem;font-weight:300;color:var(--muted);line-height:1.8;letter-spacing:0.03em;}
+.service-arrow{
+  display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.5rem;
+  font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--gold);opacity:0;transform:translateX(-10px);
+  transition:opacity 0.3s,transform 0.3s;
+}
+.service-card:hover .service-arrow{opacity:1;transform:translateX(0);}
+
+/* ══ NUMBERS ══ */
+#numbers{
+  background:linear-gradient(135deg,var(--dark2),var(--dark3));
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:5rem 6%;
+}
+.numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.number-item{
+  text-align:center;padding:2rem;border-right:1px solid var(--border);
+  position:relative;
+}
+.number-item:last-child{border-right:none;}
+.number-item::before{
+  content:'';position:absolute;top:50%;left:0;transform:translateY(-50%);
+  width:1px;height:40%;background:var(--border);
+}
+.big-num{
+  font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:700;
+  color:var(--gold);line-height:1;
+  text-shadow:0 0 40px rgba(212,168,67,0.3);
+}
+.num-label{font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;}
+
+/* ══ WHY US ══ */
+#why{background:var(--dark2);}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem;}
+.why-card{
+  border:1px solid var(--border);padding:2rem;position:relative;
+  transition:border-color 0.3s,transform 0.3s;overflow:hidden;
+}
+.why-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(212,168,67,0.04),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.why-card:hover{border-color:rgba(212,168,67,0.4);transform:translateY(-4px);}
+.why-card:hover::after{opacity:1;}
+.why-icon{font-size:1.8rem;margin-bottom:1.25rem;}
+.why-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;
+  margin-bottom:0.6rem;letter-spacing:0.01em;
+}
+.why-desc{font-size:0.8rem;font-weight:300;color:var(--muted);line-height:1.8;letter-spacing:0.03em;}
+
+/* ══ PRESENCE ══ */
+#presence{background:var(--dark);overflow:hidden;}
+.presence-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem;}
+.presence-card{
+  background:var(--dark2);border:1px solid var(--border);
+  padding:2.5rem;position:relative;overflow:hidden;
+  transition:border-color 0.3s,transform 0.3s;
+}
+.presence-card:hover{border-color:rgba(212,168,67,0.4);transform:translateY(-3px);}
+.presence-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.presence-city{
+  font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;
+  color:var(--gold);margin-bottom:0.5rem;
+}
+.presence-tag{
+  display:inline-block;font-size:0.65rem;font-weight:700;
+  letter-spacing:0.15em;text-transform:uppercase;
+  background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);
+  color:var(--gold);padding:0.2rem 0.7rem;margin-bottom:1.5rem;
+}
+.presence-detail{font-size:0.82rem;font-weight:300;color:var(--muted);line-height:1.8;letter-spacing:0.02em;}
+.presence-bg{
+  position:absolute;right:-1rem;bottom:-1rem;
+  font-size:6rem;opacity:0.04;line-height:1;
+}
+
+/* ══ CONTACT ══ */
+#contact{background:var(--dark2);}
+.contact-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;margin-top:4rem;align-items:start;}
+.contact-items{display:flex;flex-direction:column;gap:1.5rem;}
+.contact-item{
+  display:flex;align-items:flex-start;gap:1.25rem;
+  padding:1.5rem;border:1px solid var(--border);
+  transition:border-color 0.2s,transform 0.2s;
+}
+.contact-item:hover{border-color:rgba(212,168,67,0.3);transform:translateX(4px);}
+.contact-icon{
+  width:40px;height:40px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+}
+.contact-label{font-size:0.65rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.35rem;}
+.contact-val{font-size:0.88rem;font-weight:300;color:var(--text);line-height:1.6;}
+.contact-val a{color:var(--text);text-decoration:none;transition:color 0.2s;}
+.contact-val a:hover{color:var(--gold);}
+
+.contact-form{background:var(--dark3);border:1px solid var(--border);padding:2.5rem;position:relative;}
+.contact-form::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),transparent);
+}
+.contact-form h3{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;
+  margin-bottom:2rem;letter-spacing:0.02em;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{margin-bottom:1.1rem;}
+.form-group label{
+  display:block;font-size:0.65rem;font-weight:700;
+  letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;
+}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  padding:0.85rem 1rem;font-family:'Josefin Sans',sans-serif;
+  font-size:0.85rem;font-weight:300;color:var(--text);
+  outline:none;transition:border-color 0.2s;letter-spacing:0.04em;
+  appearance:none;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold);}
+.form-group textarea{resize:vertical;min-height:100px;}
+.form-group select option{background:var(--dark3);}
+.form-submit{
+  width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;border:none;padding:1rem;
+  font-family:'Josefin Sans',sans-serif;font-weight:700;
+  font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;
+  cursor:pointer;transition:opacity 0.2s,transform 0.15s,box-shadow 0.2s;
+  box-shadow:0 4px 25px rgba(212,168,67,0.3);
+}
+.form-submit:hover{opacity:0.92;transform:translateY(-2px);box-shadow:0 8px 35px rgba(212,168,67,0.45);}
+
+/* ══ FOOTER ══ */
+footer{
+  background:var(--dark);border-top:1px solid var(--border);
+  padding:3rem 6%;
+}
+.footer-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem;
+}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;
+  color:var(--gold);letter-spacing:0.04em;
+}
+.footer-links{display:flex;gap:2rem;list-style:none;flex-wrap:wrap;}
+.footer-links a{
+  color:var(--muted);font-size:0.7rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:color 0.2s;
+}
+.footer-links a:hover{color:var(--gold);}
+.footer-bottom{
+  border-top:1px solid var(--border);padding-top:1.5rem;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:0.72rem;font-weight:300;color:var(--muted);letter-spacing:0.05em;}
+.disclaimer{
+  max-width:600px;font-size:0.68rem;font-weight:300;
+  color:var(--muted);line-height:1.7;letter-spacing:0.02em;
+  border-left:2px solid rgba(212,168,67,0.3);padding-left:1rem;
+}
+
+/* ══ WHATSAPP ══ */
+#wa-btn{
+  position:fixed;bottom:2rem;right:2rem;z-index:999;
+  background:#25d366;display:flex;align-items:center;gap:0.6rem;
+  padding:0.85rem 1.4rem;text-decoration:none;color:#fff;
+  font-family:'Josefin Sans',sans-serif;font-weight:700;
+  font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;
+  box-shadow:0 4px 25px rgba(37,211,102,0.4);
+  animation:waBounce 1.5s ease 1.5s both;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+#wa-btn:hover{transform:translateY(-3px);box-shadow:0 8px 35px rgba(37,211,102,0.55);}
+@keyframes waBounce{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ ANIMATIONS ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+
+/* ══ MOBILE ══ */
+@media(max-width:900px){
+  .about-grid,.contact-wrap{grid-template-columns:1fr;gap:3rem;}
+  .services-grid{grid-template-columns:1fr;}
+  .services-grid{background:transparent;gap:1px;}
+  .service-card{border:1px solid var(--border);}
+  .numbers-grid{grid-template-columns:repeat(2,1fr);}
+  .why-grid{grid-template-columns:1fr 1fr;}
+  .presence-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .footer-inner{flex-direction:column;}
+  .footer-bottom{flex-direction:column;}
+}
+@media(max-width:640px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .hero-stats{flex-direction:column;gap:1.5rem;}
+  .stat{border-right:none;border-bottom:1px solid var(--border);padding:0 0 1.5rem;}
+  .stat:last-child{border-bottom:none;}
+  .numbers-grid{grid-template-columns:1fr 1fr;}
+  .why-grid{grid-template-columns:1fr;}
+  section{padding:5rem 5%;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursor"></div>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar">
+  <a href="#" class="logo">Shubh Labh<em>Investment</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#presence">Presence</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-stripe"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span class="hero-eyebrow-text">Chennai & Kerala · Since 2019</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="solid">Where Every</span><br/>
+      <span class="outline">Rupee</span> <span class="gold-fill">Finds</span><br/>
+      <span class="solid">Its Right Path</span>
+    </h1>
+    <p class="hero-tagline">
+      Shubh Labh Investment delivers <strong>smart loan solutions</strong> and <strong>personalised financial guidance</strong> — helping families and businesses across South India build lasting wealth.
+    </p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-filled">Explore Services</a>
+      <a href="#contact" class="btn-ghost">Talk to Advisor</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">3000+</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">₹50Cr+</div>
+        <div class="stat-label">Loans Processed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years of Trust</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2</div>
+        <div class="stat-label">State Presence</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MARQUEE ══ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Vehicle Loans</span>
+    <span class="marquee-item">Mortgage Loans</span>
+    <span class="marquee-item">Financial Consulting</span>
+    <span class="marquee-item">Fast Approvals</span>
+    <span class="marquee-item">Trusted Advisors</span>
+    <span class="marquee-item">Chennai</span>
+    <span class="marquee-item">Kerala</span>
+    <span class="marquee-item">3000+ Clients</span>
+    <span class="marquee-item">Vehicle Loans</span>
+    <span class="marquee-item">Mortgage Loans</span>
+    <span class="marquee-item">Financial Consulting</span>
+    <span class="marquee-item">Fast Approvals</span>
+    <span class="marquee-item">Trusted Advisors</span>
+    <span class="marquee-item">Chennai</span>
+    <span class="marquee-item">Kerala</span>
+    <span class="marquee-item">3000+ Clients</span>
+  </div>
+</div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal-left">
+      <div class="sec-eyebrow"><div class="sec-line"></div><span class="sec-label">About Us</span></div>
+      <h2 class="sec-title">Financial Guidance<br/><span>You Can Trust</span></h2>
+      <p class="sec-sub">Shubh Labh Investment is a premier financial services firm with a strong presence across <strong style="color:var(--text)">Chennai, Tamil Nadu</strong> and <strong style="color:var(--text)">Kerala</strong>. We specialise in helping individuals and businesses unlock financial potential through tailored loan solutions.</p>
+      <p class="sec-sub" style="margin-top:1rem;">Our philosophy is simple: every client deserves honest advice, fast execution, and a partner who genuinely cares about their financial future.</p>
+      <a href="#contact" class="btn-filled" style="display:inline-block;margin-top:2rem;">Start Your Journey</a>
+    </div>
+    <div class="about-card reveal-right">
+      <ul class="about-points">
+        <li><span class="num">01</span><span>Personalised financial solutions built around your unique needs and life goals</span></li>
+        <li><span class="num">02</span><span>Lightning-fast loan processing — minimal paperwork, maximum speed</span></li>
+        <li><span class="num">03</span><span>Zero hidden charges — complete transparency at every step of the process</span></li>
+        <li><span class="num">04</span><span>Expert advisors with deep knowledge of South India's financial landscape</span></li>
+        <li><span class="num">05</span><span>Long-term partnerships built on integrity, results, and genuine care</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services">
+  <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto 0;">
+    <div class="sec-eyebrow" style="justify-content:center;"><div class="sec-line"></div><span class="sec-label">What We Offer</span><div class="sec-line"></div></div>
+    <h2 class="sec-title">Our <span>Services</span></h2>
+    <p class="sec-sub" style="margin:1rem auto 0;">Comprehensive financial solutions designed to move you forward — faster, smarter, better.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon-wrap">🚗</div>
+      <div class="service-title">Vehicle Loan</div>
+      <p class="service-desc">Two-wheelers, cars, or commercial vehicles — we get you on the road with competitive rates, rapid approvals, and EMI plans that fit your budget perfectly.</p>
+      <div class="service-arrow">Learn More →</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <div class="service-icon-wrap">🏠</div>
+      <div class="service-title">Mortgage Loan</div>
+      <p class="service-desc">Unlock the full value of your property. Higher loan amounts, attractive interest rates, and structured repayment plans designed around your cash flow.</p>
+      <div class="service-arrow">Learn More →</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <div class="service-icon-wrap">📋</div>
+      <div class="service-title">Loan Consultation</div>
+      <p class="service-desc">Not sure where to start? Our advisors analyse your financial profile and guide you to the perfect product — with the right lender at the best possible rate.</p>
+      <div class="service-arrow">Learn More →</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NUMBERS ══ -->
+<section id="numbers">
+  <div class="numbers-grid">
+    <div class="number-item reveal">
+      <div class="big-num">3000+</div>
+      <div class="num-label">Happy Clients</div>
+    </div>
+    <div class="number-item reveal">
+      <div class="big-num">₹50Cr+</div>
+      <div class="num-label">Loans Processed</div>
+    </div>
+    <div class="number-item reveal">
+      <div class="big-num">5+</div>
+      <div class="num-label">Years of Trust</div>
+    </div>
+    <div class="number-item reveal">
+      <div class="big-num">2</div>
+      <div class="num-label">State Presence</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHY US ══ -->
+<section id="why">
+  <div class="reveal">
+    <div class="sec-eyebrow"><div class="sec-line"></div><span class="sec-label">Why Choose Us</span></div>
+    <h2 class="sec-title">The <span>Shubh Labh</span> Difference</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal"><div class="why-icon">⚡</div><div class="why-title">Lightning Fast</div><p class="why-desc">Quick turnaround on all loan applications. We respect your time — get funds when you truly need them.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🔒</div><div class="why-title">100% Transparent</div><p class="why-desc">No hidden charges. No fine print surprises. Crystal-clear terms and honest communication always.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🤝</div><div class="why-title">Personalised Service</div><p class="why-desc">We treat every client as an individual — your goals, your timeline, your customised financial plan.</p></div>
+    <div class="why-card reveal"><div class="why-icon">📍</div><div class="why-title">Local Expertise</div><p class="why-desc">Deep roots in Tamil Nadu and Kerala mean we understand the regional market better than anyone.</p></div>
+    <div class="why-card reveal"><div class="why-icon">💬</div><div class="why-title">Always Available</div><p class="why-desc">Our advisors are a call or WhatsApp away. We're here when you need us — not just 9 to 5.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🏆</div><div class="why-title">Proven Track Record</div><p class="why-desc">3000+ satisfied clients and ₹50 crore+ in loans successfully processed — results speak for themselves.</p></div>
+  </div>
+</section>
+
+<!-- ══ PRESENCE ══ -->
+<section id="presence">
+  <div class="reveal">
+    <div class="sec-eyebrow"><div class="sec-line"></div><span class="sec-label">Our Presence</span></div>
+    <h2 class="sec-title">Serving <span>South India</span></h2>
+    <p class="sec-sub">Two powerful locations. One trusted name.</p>
+  </div>
+  <div class="presence-grid">
+    <div class="presence-card reveal-left">
+      <div class="presence-city">Chennai</div>
+      <div class="presence-tag">Head Office · Tamil Nadu</div>
+      <div class="presence-detail">
+        No. 8 & 9, 2nd Floor, Solitaire Tower<br/>
+        Samy Pillai Street, Choolai<br/>
+        Chennai – 600 112<br/><br/>
+        📞 +91 93618 15117<br/>
+        ✉️ shubhlabhinvestment107@gmail.com
+      </div>
+      <div class="presence-bg">🏙️</div>
+    </div>
+    <div class="presence-card reveal-right">
+      <div class="presence-city">Kerala</div>
+      <div class="presence-tag">Branch Office · Kerala</div>
+      <div class="presence-detail">
+        Serving clients across Kerala with the same trusted service and personalised approach that our Chennai clients love.<br/><br/>
+        📞 +91 93618 15117<br/>
+        ✉️ shubhlabhinvestment107@gmail.com<br/><br/>
+        <em style="font-size:0.75rem;color:var(--gold);">Contact us for branch address details</em>
+      </div>
+      <div class="presence-bg">🌴</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="reveal">
+    <div class="sec-eyebrow"><div class="sec-line"></div><span class="sec-label">Get In Touch</span></div>
+    <h2 class="sec-title">Let's Talk <span>Finance</span></h2>
+    <p class="sec-sub">Ready to take the next step? We'll get back to you within 24 hours.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-items reveal-left">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div><div class="contact-label">Phone</div><div class="contact-val"><a href="tel:+919361815117">+91 93618 15117</a></div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div><div class="contact-label">Email</div><div class="contact-val"><a href="mailto:shubhlabhinvestment107@gmail.com">shubhlabhinvestment107@gmail.com</a></div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div><div class="contact-label">Chennai Office</div><div class="contact-val">No. 8 & 9, 2nd Floor, Solitaire Tower,<br/>Samy Pillai Street, Choolai, Chennai – 600 112</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🌴</div>
+        <div><div class="contact-label">Kerala Office</div><div class="contact-val">Contact us for branch details</div></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div><div class="contact-label">Working Hours</div><div class="contact-val">Monday – Saturday<br/>9:00 AM – 7:00 PM</div></div>
+      </div>
+    </div>
+    <div class="contact-form reveal-right">
+      <h3>Send Us a Message</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Your Name</label><input type="text" placeholder="Full Name"/></div>
+        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
+      </div>
+      <div class="form-group"><label>Location</label>
+        <select><option value="">Select your city…</option><option>Chennai</option><option>Kerala</option><option>Other</option></select>
+      </div>
+      <div class="form-group"><label>Service Interested In</label>
+        <select><option value="">Select a service…</option><option>Vehicle Loan</option><option>Mortgage Loan</option><option>Loan Consultation</option><option>Other</option></select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your requirement…"></textarea></div>
+      <button class="form-submit" onclick="submitForm(this)">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Shubh Labh Investment</div>
+    <ul class="footer-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#presence">Presence</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Shubh Labh Investment. All rights reserved. · Chennai & Kerala</div>
+    <div class="disclaimer">⚠ Shubh Labh Investment is a loan facilitation and financial consulting firm. Not a bank or NBFC. All loan products are offered in association with registered financial institutions. Please read all terms and conditions carefully before availing any financial product.</div>
+  </div>
+</footer>
+
+<!-- ══ WHATSAPP ══ -->
+<a href="https://wa.me/919361815117?text=Hello%20Shubh%20Labh%20Investment%2C%20I%20am%20interested%20in%20your%20services." target="_blank" id="wa-btn">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="#fff"><path d="M16 0C7.163 0 0 7.163 0 16c0 2.833.738 5.49 2.03 7.8L0 32l8.43-2.01A15.94 15.94 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.2a13.16 13.16 0 01-6.7-1.83l-.48-.285-4.97 1.185 1.235-4.84-.314-.497A13.14 13.14 0 012.8 16C2.8 8.71 8.71 2.8 16 2.8S29.2 8.71 29.2 16 23.29 29.2 16 29.2zm7.26-9.87c-.398-.2-2.354-1.162-2.72-1.294-.365-.133-.63-.2-.895.2-.266.398-1.03 1.294-1.263 1.56-.232.265-.465.298-.863.1-.398-.2-1.682-.62-3.204-1.977-1.184-1.057-1.983-2.362-2.216-2.76-.232-.398-.025-.613.175-.81.18-.178.398-.465.597-.698.2-.232.265-.398.398-.664.133-.265.066-.498-.033-.697-.1-.2-.895-2.16-1.227-2.957-.323-.775-.65-.67-.895-.682l-.762-.013c-.265 0-.697.1-1.063.498-.365.398-1.394 1.362-1.394 3.322s1.428 3.854 1.627 4.12c.2.265 2.81 4.29 6.808 6.016.952.41 1.694.656 2.273.84.955.304 1.824.261 2.511.158.766-.114 2.354-.963 2.686-1.893.332-.93.332-1.727.232-1.893-.1-.165-.365-.265-.763-.465z"/></svg>
+  WhatsApp Us
+</a>
+
+<script>
+// Cursor glow
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 100);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(r => observer.observe(r));
+
+// Mobile menu
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  const isOpen = links.style.display === 'flex';
+  if (isOpen) {
+    links.style.display = 'none';
+  } else {
+    Object.assign(links.style, {
+      display:'flex', flexDirection:'column', position:'fixed',
+      top:'70px', left:'0', right:'0', background:'rgba(8,8,10,0.98)',
+      padding:'2rem 6%', gap:'1.5rem', borderBottom:'1px solid var(--border)',
+      backdropFilter:'blur(20px)'
+    });
+  }
+}
+
+// Form submit
+function submitForm(btn) {
+  btn.textContent = '✓ Message Received!';
+  btn.style.background = 'linear-gradient(135deg,#4caf96,#2e9e7a)';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = 'Send Message →';
+    btn.style.background = '';
+    btn.disabled = false;
+  }, 3000);
+}
+</script>
+</body>
+</html>
